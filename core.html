@@ -205,7 +205,6 @@ layout: default
     console.error('Expected `x` to be a number but got `' + x + '`');
     return x;
   }
-
   function parseCsv(csv) {
     // Use trimHeaders <5.0.0, and transformHeader >=5.0.0
     return Papa.parse(csv, {
@@ -214,24 +213,19 @@ layout: default
       skipEmptyLines: true,
     }).data;
   }
-
   function parseDate(date) {
     if (date) {
       return date.substr(0, 4) + '-' + date.substr(4, 2) + '-' + date.substr(6, 2);
     }
     return '-';
   }
-
   const $leaderboard = document.getElementById('leaderboard');
-
   function App() {
     const [leaderboard, setLeaderboard] = React.useState([]);
-
     // Url to .csv files
     const incomeUrl = 'https://raw.githubusercontent.com/mimblewimble/grin-pm/master/financials/income_log.csv';
     const entitiesUrl = 'assets/csv/entities.csv';
     const miscUrl = 'https://raw.githubusercontent.com/mimblewimble/grin-pm/master/financials/misc_support.csv';
-
     React.useEffect(() => {
       // Fetch data on mount
       Promise.all([
@@ -242,7 +236,6 @@ layout: default
         const donations = res[0];
         const entities = res[1];
         const misc = res[2];
-
         // Append donations to the correct company/individual
         donations.concat(misc).forEach((donation) => {
           const index = entities.findIndex((o) => (o.name.toLowerCase() === donation.source.toLowerCase()));
@@ -254,7 +247,6 @@ layout: default
             console.error('Missing entity in \`entities.csv\`: ' + donation.source);
           }
         });
-
         // Add helper properties `total`, `numberOfDonations`, `lastDonation`
         // that are displayed on leaderboard
         return entities
@@ -278,7 +270,6 @@ layout: default
         }
       });
     }, []);
-
     return (
       <React.Fragment>
         {(leaderboard.length === 0)
@@ -287,7 +278,6 @@ layout: default
       </React.Fragment>
     );
   }
-
   function Loading() {
     return (
       <div className="leaderboard-content">
@@ -318,10 +308,8 @@ layout: default
       </div>
     );
   }
-
   function Leaderboard(props) {
     const [itemsToShow, setItemsToShow] = React.useState(10);
-
     return (
       <React.Fragment>
         <div className="leaderboard-content">
@@ -363,10 +351,8 @@ layout: default
         ) : null}
       </React.Fragment>
     );
-
     function LeaderboardRow(props) {
       const [showDonations, setShowDonations] = React.useState(false);
-
       return (
         <div className="leaderboard-row">
           <div className="header">
